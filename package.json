@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-dev-server",
+  "version": "1.0.0",
+  "description": "Local development server for portfolio site",
+  "scripts": {
+    "dev": "npx http-server -p 8000 -c-1 --cors"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+

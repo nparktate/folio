@@ -1,2 +1,492 @@
-<!doctype html><title>folio</title>
-<body>hello</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NICHOLAS PARK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #000000;
+            --color-border: #e0e0e0;
+            --color-hover: #f5f5f5;
+            --spacing-unit: 1rem;
+            --breakpoint-mobile: 640px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Name Section */
+        .name-section {
+            width: 100vw;
+            padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 1.5);
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: clamp(3rem, 15vw, 12rem);
+            line-height: 0.9;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .name-section .name-line {
+            display: block;
+            width: 100%;
+        }
+
+        .name-line.desktop {
+            display: none;
+        }
+
+        .name-line.mobile {
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            .name-section {
+                text-align: left;
+                padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 2);
+            }
+
+            .name-line.desktop {
+                display: block;
+            }
+
+            .name-line.mobile {
+                display: none;
+            }
+        }
+
+        /* Video Reel Section */
+        .video-section {
+            width: 100vw;
+            position: relative;
+            background: #000;
+        }
+
+        .video-container {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-container.desktop {
+            aspect-ratio: 21 / 9;
+            display: none;
+        }
+
+        .video-container.mobile {
+            aspect-ratio: 4 / 5;
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            .video-container.desktop {
+                display: block;
+            }
+            .video-container.mobile {
+                display: none;
+            }
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .unmute-button {
+            position: absolute;
+            bottom: calc(var(--spacing-unit) * 2);
+            right: calc(var(--spacing-unit) * 2);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: 2px solid #fff;
+            padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: background 0.2s, color 0.2s;
+            z-index: 10;
+        }
+
+        .unmute-button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .unmute-button.muted::before {
+            content: "🔇 ";
+        }
+
+        .unmute-button.unmuted::before {
+            content: "🔊 ";
+        }
+
+        /* Projects Section */
+        .projects-section {
+            width: 100vw;
+            padding: calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 1.5);
+            max-width: 100%;
+        }
+
+        .tabs {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 1);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .tab {
+            padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: calc(var(--spacing-unit) * -0.75);
+            transition: color 0.2s, border-color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tab:hover {
+            color: var(--color-text);
+        }
+
+        .tab.active {
+            color: var(--color-text);
+            border-bottom-color: var(--color-text);
+        }
+
+        .projects-list {
+            width: 100%;
+        }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 1.5) 0;
+            border-bottom: 1px solid var(--color-border);
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-row:hover {
+            background: var(--color-hover);
+        }
+
+        .project-row:last-child {
+            border-bottom: none;
+        }
+
+        .project-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            background: var(--color-border);
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 1.5);
+            align-items: center;
+        }
+
+        .project-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .project-meta-item {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .project-meta-label {
+            display: none;
+        }
+
+        @media (max-width: 639px) {
+            .project-row {
+                grid-template-columns: 60px 1fr;
+                gap: calc(var(--spacing-unit) * 1);
+            }
+
+            .project-thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .project-info {
+                grid-template-columns: 1fr;
+                gap: calc(var(--spacing-unit) * 0.5);
+            }
+
+            .project-meta-item {
+                font-size: 0.85rem;
+            }
+
+            .project-meta-label {
+                display: inline;
+                font-weight: 600;
+                color: var(--color-text);
+                margin-right: calc(var(--spacing-unit) * 0.5);
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 4);
+            color: #666;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 4);
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Name Section -->
+    <section class="name-section">
+        <span class="name-line desktop">NICHOLAS PARK</span>
+        <span class="name-line mobile">
+            <span>NICHOLAS</span><br>
+            <span>PARK</span>
+        </span>
+    </section>
+
+    <!-- Video Reel Section -->
+    <section class="video-section">
+        <div class="video-container desktop">
+            <video id="reel-desktop" autoplay muted loop playsinline onerror="this.style.display='none'; this.nextElementSibling.style.display='none';">
+                <source src="assets/videos/reel-21-9.mp4" type="video/mp4">
+                <!-- Add fallback sources if needed -->
+            </video>
+            <button class="unmute-button muted" id="unmute-desktop" onclick="toggleMute('desktop')">
+                Unmute
+            </button>
+        </div>
+        <div class="video-container mobile">
+            <video id="reel-mobile" autoplay muted loop playsinline onerror="this.style.display='none'; this.nextElementSibling.style.display='none';">
+                <source src="assets/videos/reel-4-5.mp4" type="video/mp4">
+                <!-- Add fallback sources if needed -->
+            </video>
+            <button class="unmute-button muted" id="unmute-mobile" onclick="toggleMute('mobile')">
+                Unmute
+            </button>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <div class="tabs">
+            <button class="tab active" data-category="work" onclick="switchTab('work')">Work</button>
+            <button class="tab" data-category="concepts" onclick="switchTab('concepts')">Concepts</button>
+        </div>
+
+        <div class="projects-list" id="projects-list">
+            <div class="loading">Loading projects...</div>
+        </div>
+    </section>
+
+    <script>
+        let allProjects = [];
+        let currentCategory = 'work';
+
+        // Video unmute functionality
+        function toggleMute(version) {
+            const video = document.getElementById(`reel-${version}`);
+            const button = document.getElementById(`unmute-${version}`);
+            
+            if (video.muted) {
+                video.muted = false;
+                button.classList.remove('muted');
+                button.classList.add('unmuted');
+                button.textContent = 'Mute';
+            } else {
+                video.muted = true;
+                button.classList.remove('unmuted');
+                button.classList.add('muted');
+                button.textContent = 'Unmute';
+            }
+        }
+
+        // Tab switching
+        function switchTab(category) {
+            currentCategory = category;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.category === category) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Render filtered projects
+            renderProjects();
+        }
+
+        // Check if running via file:// protocol
+        function isFileProtocol() {
+            return window.location.protocol === 'file:';
+        }
+
+        // Load projects from manifest
+        async function loadProjects() {
+            // Check if running from file:// protocol
+            if (isFileProtocol()) {
+                document.getElementById('projects-list').innerHTML = 
+                    '<div class="empty-state" style="padding: 2rem; background: #fff3cd; border: 2px solid #ffc107; border-radius: 4px; color: #856404;">' +
+                    '<strong>⚠️ CORS Error:</strong> You need to run a local server.<br><br>' +
+                    '<strong>Option 1 (Python):</strong> Run <code>python3 server.py</code> in terminal, then open <a href="http://localhost:8000">http://localhost:8000</a><br><br>' +
+                    '<strong>Option 2 (Node.js):</strong> Run <code>npx http-server -p 8000 --cors</code> in terminal, then open <a href="http://localhost:8000">http://localhost:8000</a><br><br>' +
+                    '<strong>Option 3 (VS Code):</strong> Use "Live Server" extension</div>';
+                return;
+            }
+
+            try {
+                // Load manifest
+                const manifestResponse = await fetch('projects.json');
+                if (!manifestResponse.ok) {
+                    throw new Error('Failed to load projects manifest');
+                }
+                const projectFiles = await manifestResponse.json();
+
+                if (projectFiles.length === 0) {
+                    document.getElementById('projects-list').innerHTML = 
+                        '<div class="empty-state">No projects found. Add projects to projects.json</div>';
+                    return;
+                }
+
+                // Load each project file and extract metadata
+                const projects = [];
+                for (const file of projectFiles) {
+                    try {
+                        const response = await fetch(file);
+                        if (!response.ok) {
+                            console.warn(`Failed to load project file: ${file}`);
+                            continue;
+                        }
+                        
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const metadataScript = doc.getElementById('project-metadata');
+                        if (!metadataScript) {
+                            console.warn(`No metadata found in: ${file}`);
+                            continue;
+                        }
+                        
+                        const metadata = JSON.parse(metadataScript.textContent);
+                        
+                        // Get thumbnail image
+                        const thumbnailImg = doc.getElementById('list-thumbnail');
+                        metadata.thumbnailSrc = thumbnailImg ? thumbnailImg.src : '';
+                        
+                        // Store project file path
+                        metadata.projectFile = file;
+                        
+                        projects.push(metadata);
+                    } catch (error) {
+                        console.error(`Error loading project ${file}:`, error);
+                    }
+                }
+
+                if (projects.length === 0) {
+                    document.getElementById('projects-list').innerHTML = 
+                        '<div class="empty-state">No valid projects found. Check console for errors.</div>';
+                    return;
+                }
+
+                // Sort projects by date (newest first)
+                projects.sort((a, b) => {
+                    const dateA = new Date(b.dateEnd || b.dateStart);
+                    const dateB = new Date(a.dateEnd || a.dateStart);
+                    return dateA - dateB;
+                });
+
+                allProjects = projects;
+                renderProjects();
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                document.getElementById('projects-list').innerHTML = 
+                    '<div class="empty-state">Error loading projects: ' + error.message + '. Please check the console for details.</div>';
+            }
+        }
+
+        // Render projects list
+        function renderProjects() {
+            const filteredProjects = allProjects.filter(p => p.category === currentCategory);
+            const listContainer = document.getElementById('projects-list');
+
+            if (filteredProjects.length === 0) {
+                listContainer.innerHTML = 
+                    `<div class="empty-state">No ${currentCategory} projects found.</div>`;
+                return;
+            }
+
+            listContainer.innerHTML = filteredProjects.map(project => {
+                const dateStart = new Date(project.dateStart);
+                const dateEnd = project.dateEnd ? new Date(project.dateEnd) : null;
+                const dateStr = dateEnd && dateEnd.getTime() !== dateStart.getTime()
+                    ? `${dateStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - ${dateEnd.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
+                    : dateStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+                return `
+                    <a href="${project.projectFile}" class="project-row">
+                        <img src="${project.thumbnailSrc || ''}" alt="${project.name}" class="project-thumbnail" onerror="this.style.display='none'">
+                        <div class="project-info">
+                            <div class="project-name">${project.name}</div>
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Date:</span>${dateStr}
+                            </div>
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Tools:</span>${project.tools.join(', ')}
+                            </div>
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Type:</span>${project.workType}
+                            </div>
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Collaborators:</span>${project.collaborators && project.collaborators.length > 0 ? project.collaborators.join(', ') : 'None'}
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        // Initialize on page load
+        loadProjects();
+    </script>
+</body>
+</html>

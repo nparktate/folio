@@ -1,1 +1,4 @@
 .DS_Store
+
+# Local development only (not needed for Cloudflare Pages deployment)
+# server.py and package.json are kept in repo for local dev convenience
