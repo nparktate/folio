@@ -1,0 +1,55 @@
+<!-- 
+  GRID LAYOUT: 2 TOP, 1 BOTTOM
+  Usage: Copy this entire block into your project.html, then replace:
+  - [IMAGE-1-URL] through [IMAGE-3-URL] with your image URLs
+  - [IMAGE-ALT-TEXT] with alt text
+  - [CAPTION-TEXT] with optional captions
+-->
+<div class="component-grid-2-1">
+    <style>
+        .component-grid-2-1 {
+            margin: calc(var(--spacing-unit, 1rem) * 2) 0;
+        }
+        .grid-2-1-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(var(--spacing-unit, 1rem) * 1);
+            margin-bottom: calc(var(--spacing-unit, 1rem) * 1);
+        }
+        .grid-2-1-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .grid-2-1-bottom {
+            grid-column: 1 / -1;
+        }
+        .grid-2-1-caption {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: calc(var(--spacing-unit, 1rem) * 0.5);
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .grid-2-1-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <div class="grid-2-1-container">
+        <div>
+            <img src="[IMAGE-1-URL]" alt="[IMAGE-1-ALT]">
+            <div class="grid-2-1-caption">[CAPTION-1]</div>
+        </div>
+        <div>
+            <img src="[IMAGE-2-URL]" alt="[IMAGE-2-ALT]">
+            <div class="grid-2-1-caption">[CAPTION-2]</div>
+        </div>
+        <div class="grid-2-1-bottom">
+            <img src="[IMAGE-3-URL]" alt="[IMAGE-3-ALT]">
+            <div class="grid-2-1-caption">[CAPTION-3]</div>
+        </div>
+    </div>
+</div>
+

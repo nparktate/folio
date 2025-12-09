@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Series</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/project.css">
+</head>
+<body>
+    <img id="list-thumbnail" src="https://picsum.photos/400/400?random=5" alt="Project thumbnail">
+
+    <script type="application/json" id="project-metadata">
+    {
+        "name": "Urban Photography Series",
+        "dateStart": "2024-07-01",
+        "dateEnd": "2024-07-31",
+        "tools": ["Lightroom", "Photoshop", "Capture One"],
+        "workType": "Misc",
+        "collaborators": [],
+        "category": "work",
+        "thumbnail": "https://picsum.photos/400/400?random=5",
+        "projectFile": "project-5.html"
+    }
+    </script>
+
+    <div class="project-header">
+        <h1 class="project-name" id="display-name">Urban Photography Series</h1>
+        <div class="project-meta">
+            <div class="meta-item">
+                <span class="meta-label">Date:</span>
+                <span id="display-date">July 2024</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Tools:</span>
+                <span id="display-tools">Lightroom, Photoshop, Capture One</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Type:</span>
+                <span id="display-type">Misc</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <!-- Title + Paragraph (Left) -->
+        <div data-component="text-block" 
+             data-variant="title-paragraph"
+             data-textcontent="<h2>About This Series</h2><p>An exploration of urban landscapes through a minimalist lens. This series captures the geometric patterns and rhythms found in city architecture, focusing on light, shadow, and form.</p>" 
+             data-textalign="left">
+        </div>
+
+        <!-- Grid 3 Component -->
+        <div data-component="grid-3" 
+             data-image1url="https://picsum.photos/600/900?random=50" 
+             data-image1alt="Photo 1"
+             data-image2url="https://picsum.photos/600/900?random=51" 
+             data-image2alt="Photo 2"
+             data-image3url="https://picsum.photos/600/900?random=52" 
+             data-image3alt="Photo 3"
+             data-caption1="Downtown facade"
+             data-caption2="Street intersection"
+             data-caption3="Architectural detail">
+        </div>
+
+        <!-- Quote (Left) -->
+        <div data-component="text-block" 
+             data-variant="quote"
+             data-quotetext="In the city, geometry becomes poetry through the lens of observation."
+             data-quoteauthor="Anonymous"
+             data-textalign="left">
+        </div>
+
+        <!-- Paragraph Only (Left) -->
+        <div data-component="text-block" 
+             data-variant="paragraph"
+             data-textcontent="<p>Each photograph in this series was captured during the golden hour, when natural light transforms ordinary structures into extraordinary compositions. The interplay between shadow and illumination reveals hidden patterns and creates visual rhythm.</p>" 
+             data-textalign="left">
+        </div>
+
+        <!-- Full Width Image Component -->
+        <div data-component="full-width-image" 
+             data-imageurl="https://picsum.photos/1200/800?random=53" 
+             data-imagealt="Featured image"
+             data-caption="Featured composition from the series">
+        </div>
+
+        <!-- Title Only (Left) -->
+        <div data-component="text-block" 
+             data-variant="title-only"
+             data-titletext="Technical Notes"
+             data-textalign="left">
+        </div>
+
+        <!-- Paragraph Only (Left) -->
+        <div data-component="text-block" 
+             data-variant="paragraph"
+             data-textcontent="<p>Shot with a 35mm lens on a full-frame sensor. Post-processing emphasized contrast and clarity while maintaining the authentic character of each scene. All images processed in Capture One and finalized in Photoshop.</p>" 
+             data-textalign="left">
+        </div>
+    </div>
+
+    <!-- Component Loader - must be included for components to work -->
+    <script src="components/component-loader.js"></script>
+
+    <script>
+        const metadataScript = document.getElementById('project-metadata');
+        if (metadataScript) {
+            const metadata = JSON.parse(metadataScript.textContent);
+            document.getElementById('display-name').textContent = metadata.name;
+            const startDate = new Date(metadata.dateStart);
+            const endDate = metadata.dateEnd ? new Date(metadata.dateEnd) : null;
+            const dateStr = endDate && endDate.getTime() !== startDate.getTime()
+                ? `${startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`
+                : startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            document.getElementById('display-date').textContent = dateStr;
+            document.getElementById('display-tools').textContent = metadata.tools.join(', ');
+            document.getElementById('display-type').textContent = metadata.workType;
+        }
+    </script>
+</body>
+</html>
+

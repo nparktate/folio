@@ -1,0 +1,180 @@
+<!-- 
+  TEXT BLOCK COMPONENT - Multiple variants
+  Variants: paragraph, title-paragraph, quote, title-only
+  
+  Usage with data attributes:
+  - data-variant: "paragraph" | "title-paragraph" | "quote" | "title-only"
+  - data-textcontent: HTML content (for paragraph/title-paragraph/title-only)
+  - data-quotetext: Quote text (for quote variant)
+  - data-quoteauthor: Optional author (for quote variant)
+  - data-textalign: "left" | "center" | "right" (default: left)
+-->
+<div class="component-text-block" data-variant="[VARIANT]" data-align="[TEXT-ALIGN]">
+    <style>
+        .component-text-block {
+            margin: calc(var(--spacing-unit, 1rem) * 2) 0;
+            max-width: 700px;
+        }
+        .component-text-block[data-align="left"] {
+            margin-right: auto;
+            margin-left: 0;
+        }
+        .component-text-block[data-align="center"] {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .component-text-block[data-align="right"] {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        .text-block-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        .text-block-content.left {
+            text-align: left;
+        }
+        .text-block-content.center {
+            text-align: center;
+        }
+        .text-block-content.right {
+            text-align: right;
+        }
+        .text-block-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit, 1rem) * 1);
+            color: #000;
+        }
+        .text-block-content p {
+            margin-bottom: calc(var(--spacing-unit, 1rem) * 1);
+        }
+        .text-block-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Quote variant */
+        .text-block-quote-wrapper {
+            /* Container for quote and author */
+        }
+        .text-block-quote-text {
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #333;
+            padding-left: calc(var(--spacing-unit, 1rem) * 2);
+            border-left: 3px solid #000;
+            margin-bottom: 0;
+        }
+        /* Quotes are always left-aligned text, even when block is centered */
+        .text-block-quote-wrapper.left .text-block-quote-text {
+            text-align: left;
+        }
+        .text-block-quote-wrapper.center .text-block-quote-text {
+            text-align: left; /* Text stays left-aligned */
+        }
+        .text-block-quote-wrapper.right .text-block-quote-text {
+            text-align: left; /* Text stays left-aligned even when block is right */
+            padding-left: calc(var(--spacing-unit, 1rem) * 2);
+            padding-right: 0;
+            border-left: 3px solid #000;
+            border-right: none;
+        }
+        
+        /* Author inline for left/right aligned quotes */
+        .text-block-quote-author-inline {
+            font-style: normal;
+            font-size: 1.3rem;
+            color: #666;
+            display: inline;
+            margin-left: 0.5em;
+        }
+        
+        /* Author below for centered quotes */
+        .text-block-quote-author-below {
+            font-style: normal;
+            font-size: 0.9rem;
+            margin-top: calc(var(--spacing-unit, 1rem) * 1);
+            color: #666;
+            text-align: center;
+            padding-left: 0;
+        }
+        
+        /* Hide inline author for centered quotes */
+        .text-block-quote-wrapper.center .text-block-quote-author-inline {
+            display: none;
+        }
+        
+        /* Hide below author for left/right quotes */
+        .text-block-quote-wrapper.left .text-block-quote-author-below,
+        .text-block-quote-wrapper.right .text-block-quote-author-below {
+            display: none;
+        }
+        
+        /* Title-only variant */
+        .text-block-title-only {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0;
+        }
+        .text-block-title-only.left {
+            text-align: left;
+        }
+        .text-block-title-only.center {
+            text-align: center;
+        }
+        .text-block-title-only.right {
+            text-align: right;
+        }
+        
+        /* Paragraph-only variant */
+        .text-block-paragraph {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        .text-block-paragraph.left {
+            text-align: left;
+        }
+        .text-block-paragraph.center {
+            text-align: center;
+        }
+        .text-block-paragraph.right {
+            text-align: right;
+        }
+        .text-block-paragraph h2 {
+            display: none;
+        }
+        .text-block-paragraph p {
+            margin-bottom: calc(var(--spacing-unit, 1rem) * 1);
+        }
+        .text-block-paragraph p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+    
+    <!-- Variant: paragraph -->
+    <div class="text-block-paragraph [TEXT-ALIGN]" style="display: [DISPLAY-PARAGRAPH];">
+        [TEXT-CONTENT]
+    </div>
+    
+    <!-- Variant: title-paragraph -->
+    <div class="text-block-content [TEXT-ALIGN]" style="display: [DISPLAY-TITLE-PARAGRAPH];">
+        [TEXT-CONTENT]
+    </div>
+    
+    <!-- Variant: quote -->
+    <div class="text-block-quote-wrapper [TEXT-ALIGN]" style="display: [DISPLAY-QUOTE];">
+        <div class="text-block-quote-text">
+            [QUOTE-TEXT]<span class="text-block-quote-author-inline" style="display: [DISPLAY-AUTHOR-INLINE];"> — [QUOTE-AUTHOR]</span>
+        </div>
+        <div class="text-block-quote-author-below" style="display: [DISPLAY-AUTHOR-BELOW];">— [QUOTE-AUTHOR]</div>
+    </div>
+    
+    <!-- Variant: title-only -->
+    <h2 class="text-block-title-only [TEXT-ALIGN]" style="display: [DISPLAY-TITLE-ONLY];">
+        [TITLE-TEXT]
+    </h2>
+</div>

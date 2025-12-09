@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Production</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/project.css">
+</head>
+<body>
+    <img id="list-thumbnail" src="https://picsum.photos/400/400?random=4" alt="Project thumbnail">
+
+    <script type="application/json" id="project-metadata">
+    {
+        "name": "Commercial Video Production",
+        "dateStart": "2024-05-01",
+        "dateEnd": "2024-06-15",
+        "tools": ["Premiere Pro", "DaVinci Resolve", "Cinema 4D"],
+        "workType": "Freelance",
+        "collaborators": [],
+        "category": "work",
+        "thumbnail": "https://picsum.photos/400/400?random=4",
+        "projectFile": "project-4.html"
+    }
+    </script>
+
+    <div class="project-header">
+        <h1 class="project-name" id="display-name">Commercial Video Production</h1>
+        <div class="project-meta">
+            <div class="meta-item">
+                <span class="meta-label">Date:</span>
+                <span id="display-date">May 2024 - June 2024</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Tools:</span>
+                <span id="display-tools">Premiere Pro, DaVinci Resolve, Cinema 4D</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Type:</span>
+                <span id="display-type">Freelance</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <!-- Video Embed Component -->
+        <div data-component="video-embed" 
+             data-videourl="assets/videos/sample-video.mp4" 
+             data-videoposter=""
+             data-videocaption="Final commercial video"
+             data-videodescription="">
+        </div>
+
+        <!-- Grid 2-1 Component -->
+        <div data-component="grid-2-1" 
+             data-image1url="https://picsum.photos/800/600?random=40" 
+             data-image1alt="Behind the scenes"
+             data-image2url="https://picsum.photos/800/600?random=41" 
+             data-image2alt="Color grading"
+             data-image3url="https://picsum.photos/1200/500?random=42" 
+             data-image3alt="Final stills"
+             data-caption1="Behind the scenes"
+             data-caption2="Color grading process"
+             data-caption3="Selected final stills">
+        </div>
+    </div>
+
+    <!-- Component Loader - must be included for components to work -->
+    <script src="components/component-loader.js"></script>
+
+    <script>
+        const metadataScript = document.getElementById('project-metadata');
+        if (metadataScript) {
+            const metadata = JSON.parse(metadataScript.textContent);
+            document.getElementById('display-name').textContent = metadata.name;
+            const startDate = new Date(metadata.dateStart);
+            const endDate = metadata.dateEnd ? new Date(metadata.dateEnd) : null;
+            const dateStr = endDate && endDate.getTime() !== startDate.getTime()
+                ? `${startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`
+                : startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            document.getElementById('display-date').textContent = dateStr;
+            document.getElementById('display-tools').textContent = metadata.tools.join(', ');
+            document.getElementById('display-type').textContent = metadata.workType;
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,594 @@
+<!-- 
+  IMAGE CAROUSEL COMPONENT
+  Features:
+  - Auto-advance every 5 seconds (pauses for 3 seconds after user interaction)
+  - Left/right arrow buttons overlapping image sides
+  - Dot indicators at bottom center
+  - Progress bar at top showing auto-advance progress
+  - High contrast controls using blend modes
+  - Responsive for mobile and desktop
+-->
+<div class="component-image-carousel">
+    <style>
+        .component-image-carousel {
+            margin: calc(var(--spacing-unit, 1rem) * 2) 0;
+            position: relative;
+        }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-image-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            flex-direction: row;
+            transition: transform 0.5s ease;
+            will-change: transform;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            width: 100%;
+            flex: 0 0 100%;
+            flex-shrink: 0;
+            position: relative;
+            display: block;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+        .carousel-caption-wrapper {
+            padding: calc(var(--spacing-unit, 1rem) * 0.5);
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            min-height: 2.5rem;
+        }
+        .carousel-caption {
+            margin: 0;
+        }
+        
+        /* Arrow buttons - overlapping sides of image, no circle background */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #fff;
+            z-index: 10;
+            transition: all 0.3s ease;
+            mix-blend-mode: difference;
+            margin: 0;
+            padding: calc(var(--spacing-unit, 1rem) * 0.5);
+        }
+        .carousel-arrow:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+        .carousel-arrow.prev {
+            left: calc(var(--spacing-unit, 1rem) * 1);
+        }
+        .carousel-arrow.next {
+            right: calc(var(--spacing-unit, 1rem) * 1);
+        }
+        
+        /* Mobile: smaller arrows and ensure proper image sizing */
+        @media (max-width: 640px) {
+            .carousel-arrow {
+                font-size: 2rem;
+            }
+            .carousel-arrow.prev {
+                left: calc(var(--spacing-unit, 1rem) * 0.5);
+            }
+            .carousel-arrow.next {
+                right: calc(var(--spacing-unit, 1rem) * 0.5);
+            }
+            
+            .carousel-container {
+                overflow: hidden;
+            }
+            
+            .carousel-image-wrapper {
+                width: 100%;
+                overflow: hidden;
+            }
+            
+            .carousel-track {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+            }
+            
+            .carousel-container {
+                width: 100%;
+                overflow: hidden;
+            }
+            
+            .carousel-image-wrapper {
+                width: 100%;
+                overflow: hidden;
+            }
+            
+            .carousel-track {
+                display: flex;
+                flex-direction: row;
+            }
+            
+            .carousel-slide {
+                min-width: 100%;
+                width: 100%;
+                flex: 0 0 100%;
+                flex-shrink: 0;
+                display: block;
+            }
+            
+            .carousel-slide img {
+                width: 100%;
+                height: auto;
+                display: block;
+                max-width: 100%;
+                object-fit: contain;
+            }
+        }
+        
+        /* Progress bar - top of image */
+        .carousel-progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.25);
+        }
+        .carousel-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: width linear;
+        }
+        
+        /* Dot indicators - bottom center of image, on top of image */
+        .carousel-dots {
+            position: absolute;
+            bottom: calc(var(--spacing-unit, 1rem) * 2);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: calc(var(--spacing-unit, 1rem) * 0.5);
+            z-index: 10;
+            padding: 0;
+            background: none;
+            border-radius: 0;
+            box-shadow: none;
+            mix-blend-mode: difference;
+            align-items: center;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            min-width: 10px;
+            min-height: 10px;
+            max-width: 10px;
+            max-height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            display: block;
+        }
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.2);
+        }
+        .carousel-dot.active {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(255, 255, 255, 1);
+            transform: scale(1.3);
+        }
+        
+        /* Hide controls on mobile touch if needed - optional */
+        @media (hover: none) {
+            .carousel-arrow {
+                opacity: 0.8;
+            }
+            .carousel-arrow:active {
+                opacity: 1;
+            }
+        }
+    </style>
+    
+    <div class="carousel-container" id="carousel-[UNIQUE-ID]">
+        <div class="carousel-image-wrapper">
+            <!-- Progress bar -->
+            <div class="carousel-progress-container">
+                <div class="carousel-progress-bar" id="progress-[UNIQUE-ID]"></div>
+            </div>
+            
+            <div class="carousel-track">
+                <!-- Slides will be generated dynamically by component loader -->
+            </div>
+            
+            <!-- Arrow buttons -->
+            <button class="carousel-arrow prev" 
+                    onclick="carouselPrev('[UNIQUE-ID]')" 
+                    aria-label="Previous image">←</button>
+            <button class="carousel-arrow next" 
+                    onclick="carouselNext('[UNIQUE-ID]')" 
+                    aria-label="Next image">→</button>
+            
+            <!-- Dot indicators (generated dynamically) -->
+            <div class="carousel-dots" id="dots-[UNIQUE-ID]">
+                <!-- Dots will be generated by script based on number of slides -->
+            </div>
+        </div>
+        
+        <!-- Captions below image -->
+        <div class="carousel-caption-wrapper" id="caption-[UNIQUE-ID]">
+            <!-- Captions will be shown for current slide -->
+        </div>
+    </div>
+    
+    <script>
+        // Carousel functionality with auto-advance
+        (function() {
+            if (!window.carouselInitialized) {
+                window.carouselStates = {};
+                window.carouselIntervals = {};
+                window.carouselInitialized = true;
+                
+                window.initCarousel = function(id, total) {
+                    if (!window.carouselStates[id]) {
+                        window.carouselStates[id] = { 
+                            current: 0, 
+                            total: total, 
+                            paused: false,
+                            autoAdvanceDelay: 5000, // 5 seconds
+                            interactionPauseDelay: 3000, // 3 seconds pause after interaction
+                            advanceTimeout: null,
+                            resumeTimeout: null
+                        };
+                        startAutoAdvance(id);
+                        startProgressBar(id);
+                    }
+                };
+                
+                function scheduleNextSlide(id, delay) {
+                    const state = window.carouselStates[id];
+                    if (!state) return;
+                    
+                    // Clear any existing timeout
+                    if (state.advanceTimeout) {
+                        clearTimeout(state.advanceTimeout);
+                        state.advanceTimeout = null;
+                    }
+                    
+                    // Schedule next slide
+                    state.advanceTimeout = setTimeout(() => {
+                        if (window.carouselStates[id] && !window.carouselStates[id].paused) {
+                            const state = window.carouselStates[id];
+                            state.current = (state.current + 1) % state.total;
+                            updateCarousel(id, true); // This will restart both progress bar and timer
+                        }
+                    }, delay);
+                }
+                
+                function startAutoAdvance(id) {
+                    const state = window.carouselStates[id];
+                    if (!state || state.paused) return;
+                    
+                    // Clear any existing timeout first
+                    if (state.advanceTimeout) {
+                        clearTimeout(state.advanceTimeout);
+                    }
+                    
+                    // Schedule the next slide
+                    scheduleNextSlide(id, state.autoAdvanceDelay);
+                }
+                
+                function startProgressBar(id) {
+                    const state = window.carouselStates[id];
+                    if (!state || state.paused) return;
+                    
+                    const progressBar = document.getElementById(`progress-${id}`);
+                    if (!progressBar) return;
+                    
+                    // Reset progress bar
+                    progressBar.style.width = '0%';
+                    progressBar.style.transition = 'none';
+                    progressBar.offsetHeight; // Trigger reflow
+                    
+                    // Animate progress bar
+                    progressBar.style.transition = `width ${state.autoAdvanceDelay}ms linear`;
+                    progressBar.style.width = '100%';
+                }
+                
+                function resetProgressBar(id) {
+                    const progressBar = document.getElementById(`progress-${id}`);
+                    const state = window.carouselStates[id];
+                    if (progressBar && state) {
+                        // Clear existing timeout
+                        if (state.advanceTimeout) {
+                            clearTimeout(state.advanceTimeout);
+                            state.advanceTimeout = null;
+                        }
+                        
+                        // Reset progress bar
+                        progressBar.style.width = '0%';
+                        progressBar.style.transition = 'none';
+                        progressBar.offsetHeight; // Trigger reflow
+                        
+                        // Restart both progress bar and timer if not paused
+                        if (!state.paused) {
+                            startProgressBar(id);
+                            startAutoAdvance(id);
+                        } else {
+                            // If paused, just hide progress bar
+                            progressBar.style.width = '0%';
+                        }
+                    }
+                }
+                
+                // Pause auto-play after user interaction, resume after delay
+                function pauseAfterInteraction(id) {
+                    const state = window.carouselStates[id];
+                    if (!state) return;
+                    
+                    // Clear any existing resume timeout (reset timer if user interacts again)
+                    if (state.resumeTimeout) {
+                        clearTimeout(state.resumeTimeout);
+                        state.resumeTimeout = null;
+                    }
+                    
+                    // Pause auto-play
+                    state.paused = true;
+                    
+                    // Clear auto-advance timeout
+                    if (state.advanceTimeout) {
+                        clearTimeout(state.advanceTimeout);
+                        state.advanceTimeout = null;
+                    }
+                    
+                    // Reset progress bar (hide it while paused)
+                    const progressBar = document.getElementById(`progress-${id}`);
+                    if (progressBar) {
+                        progressBar.style.width = '0%';
+                        progressBar.style.transition = 'none';
+                    }
+                    
+                    // Resume after 3 seconds
+                    state.resumeTimeout = setTimeout(() => {
+                        if (window.carouselStates[id]) {
+                            window.carouselStates[id].paused = false;
+                            resetProgressBar(id); // This will restart both timer and progress bar
+                        }
+                    }, state.interactionPauseDelay);
+                }
+                
+                window.carouselNext = function(id) {
+                    const container = document.getElementById(`carousel-${id}`);
+                    if (!container) return;
+                    
+                    const slides = container.querySelectorAll('.carousel-slide');
+                    const total = slides.length;
+                    if (!window.carouselStates[id]) {
+                        window.initCarousel(id, total);
+                    }
+                    const state = window.carouselStates[id];
+                    state.current = (state.current + 1) % state.total;
+                    updateCarousel(id, false); // Don't auto-reset, let pauseAfterInteraction handle it
+                    pauseAfterInteraction(id); // Pause for 3 seconds after interaction
+                };
+                
+                window.carouselPrev = function(id) {
+                    const container = document.getElementById(`carousel-${id}`);
+                    if (!container) return;
+                    
+                    const slides = container.querySelectorAll('.carousel-slide');
+                    const total = slides.length;
+                    if (!window.carouselStates[id]) {
+                        window.initCarousel(id, total);
+                    }
+                    const state = window.carouselStates[id];
+                    state.current = (state.current - 1 + state.total) % state.total;
+                    updateCarousel(id, false); // Don't auto-reset, let pauseAfterInteraction handle it
+                    pauseAfterInteraction(id); // Pause for 3 seconds after interaction
+                };
+                
+                window.carouselGoTo = function(id, index) {
+                    const container = document.getElementById(`carousel-${id}`);
+                    if (!container) return;
+                    
+                    const slides = container.querySelectorAll('.carousel-slide');
+                    const total = slides.length;
+                    if (!window.carouselStates[id]) {
+                        window.initCarousel(id, total);
+                    }
+                    window.carouselStates[id].current = index;
+                    updateCarousel(id, false); // Don't auto-reset, let pauseAfterInteraction handle it
+                    pauseAfterInteraction(id); // Pause for 3 seconds after interaction
+                };
+                
+                function updateCarousel(id, resetProgress = false) {
+                    const state = window.carouselStates[id];
+                    if (!state) return;
+                    
+                    const container = document.getElementById(`carousel-${id}`);
+                    if (!container) return;
+                    
+                    const track = container.querySelector('.carousel-track');
+                    const dots = container.querySelectorAll(`#dots-${id} .carousel-dot`);
+                    const captionWrapper = container.querySelector(`#caption-${id}`);
+                    
+                    if (track && state.current !== undefined) {
+                        // Transform calculation:
+                        // - Each slide is flex: 0 0 100% (100% of container width)
+                        // - Track contains N slides, so track width = N * container width
+                        // - To show slide at index 'current', move track by -current container widths
+                        // - Since transform % is relative to the element being transformed (track),
+                        //   and track is N times container width, we move by: -current * (100% / N)
+                        const slides = track.querySelectorAll('.carousel-slide');
+                        const numSlides = slides.length || 1;
+                        const translateX = -state.current * (100 / numSlides);
+                        track.style.transform = `translateX(${translateX}%)`;
+                        track.style.webkitTransform = `translateX(${translateX}%)`; // Safari support
+                    }
+                    
+                    if (dots && dots.length > 0) {
+                        dots.forEach((dot, i) => {
+                            dot.classList.toggle('active', i === state.current);
+                        });
+                    }
+                    
+                    // Update caption
+                    if (captionWrapper && state.captions && state.captions[state.current]) {
+                        captionWrapper.innerHTML = `<div class="carousel-caption">${state.captions[state.current]}</div>`;
+                    } else if (captionWrapper) {
+                        captionWrapper.innerHTML = '';
+                    }
+                    
+                    // Reset progress bar on slide change (for auto-advance only)
+                    if (resetProgress) {
+                        resetProgressBar(id);
+                    }
+                }
+                
+                // Initialize all carousels and set up pause/resume
+                function initializeAllCarousels() {
+                    document.querySelectorAll('.carousel-container').forEach(container => {
+                        const id = container.id.replace('carousel-', '');
+                        const slides = container.querySelectorAll('.carousel-slide');
+                        const dotsContainer = container.querySelector(`#dots-${id}`);
+                        const imageWrapper = container.querySelector('.carousel-image-wrapper');
+                        const track = container.querySelector('.carousel-track');
+                        
+                        if (slides.length > 0 && dotsContainer && imageWrapper && track) {
+                            // Get captions from data attribute
+                            let captions = [];
+                            const captionsAttr = container.getAttribute('data-captions');
+                            if (captionsAttr) {
+                                try {
+                                    captions = JSON.parse(captionsAttr);
+                                } catch (e) {
+                                    console.error('Error parsing captions:', e);
+                                }
+                            }
+                            
+                            // Set up proper sizing using CSS custom property for number of slides
+                            const numSlides = slides.length;
+                            container.style.setProperty('--num-slides', numSlides);
+                            
+                            // Ensure slides are properly sized - each slide should be container width
+                            // Track width = numSlides * 100% (of container)
+                            // Each slide = 100% / numSlides (of track) = 100% (of container)
+                            track.style.display = 'flex';
+                            track.style.flexDirection = 'row';
+                            track.style.width = `${numSlides * 100}%`;
+                            
+                            slides.forEach((slide) => {
+                                // Each slide is 100% of container = (100/numSlides)% of track
+                                const slidePercent = 100 / numSlides;
+                                slide.style.flex = `0 0 ${slidePercent}%`;
+                                slide.style.width = `${slidePercent}%`;
+                                slide.style.minWidth = `${slidePercent}%`;
+                                slide.style.position = 'relative';
+                                
+                                // Ensure images maintain aspect ratio
+                                const img = slide.querySelector('img');
+                                if (img) {
+                                    img.style.width = '100%';
+                                    img.style.height = 'auto';
+                                    img.style.display = 'block';
+                                    img.style.maxWidth = '100%';
+                                    img.style.objectFit = 'contain';
+                                }
+                            });
+                            
+                            // Ensure container wrapper doesn't constrain height
+                            imageWrapper.style.height = 'auto';
+                            
+                            // Generate dots dynamically if not already present
+                            if (dotsContainer.children.length === 0) {
+                                slides.forEach((_, i) => {
+                                    const dot = document.createElement('button');
+                                    dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+                                    dot.setAttribute('onclick', `carouselGoTo('${id}', ${i})`);
+                                    dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+                                    dotsContainer.appendChild(dot);
+                                });
+                            }
+                            
+                            // Initialize carousel with captions
+                            if (!window.carouselStates[id]) {
+                                window.initCarousel(id, slides.length);
+                                if (captions.length > 0) {
+                                    window.carouselStates[id].captions = captions;
+                                    updateCarousel(id, false); // Don't reset progress on initial load
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                // Initialize when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initializeAllCarousels);
+                } else {
+                    initializeAllCarousels();
+                }
+                
+                // Also initialize after a short delay to catch dynamically loaded components
+                setTimeout(initializeAllCarousels, 500);
+                
+                // Additional initialization after images load to ensure proper sizing
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        initializeAllCarousels();
+                        // Force update all carousels after images load
+                        document.querySelectorAll('.carousel-container').forEach(container => {
+                            const id = container.id.replace('carousel-', '');
+                            if (window.carouselStates[id]) {
+                                updateCarousel(id, false);
+                            }
+                        });
+                    }, 100);
+                });
+                
+                // Reinitialize on window resize to handle orientation changes
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        // Just update positions, CSS handles sizing
+                        document.querySelectorAll('.carousel-container').forEach(container => {
+                            const id = container.id.replace('carousel-', '');
+                            if (window.carouselStates[id]) {
+                                updateCarousel(id, false);
+                            }
+                        });
+                    }, 100);
+                });
+            }
+        })();
+    </script>
+</div>

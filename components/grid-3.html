@@ -1,0 +1,51 @@
+<!-- 
+  GRID LAYOUT: 3 COLUMN GRID
+  Usage: Copy this entire block into your project.html, then replace:
+  - [IMAGE-1-URL] through [IMAGE-3-URL] with your image URLs
+  - [IMAGE-ALT-TEXT] with alt text
+  - [CAPTION-TEXT] with optional captions
+-->
+<div class="component-grid-3">
+    <style>
+        .component-grid-3 {
+            margin: calc(var(--spacing-unit, 1rem) * 2) 0;
+        }
+        .grid-3-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: calc(var(--spacing-unit, 1rem) * 1);
+        }
+        .grid-3-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .grid-3-caption {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: calc(var(--spacing-unit, 1rem) * 0.5);
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .grid-3-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <div class="grid-3-container">
+        <div>
+            <img src="[IMAGE-1-URL]" alt="[IMAGE-1-ALT]">
+            <div class="grid-3-caption">[CAPTION-1]</div>
+        </div>
+        <div>
+            <img src="[IMAGE-2-URL]" alt="[IMAGE-2-ALT]">
+            <div class="grid-3-caption">[CAPTION-2]</div>
+        </div>
+        <div>
+            <img src="[IMAGE-3-URL]" alt="[IMAGE-3-ALT]">
+            <div class="grid-3-caption">[CAPTION-3]</div>
+        </div>
+    </div>
+</div>
+

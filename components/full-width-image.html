@@ -1,0 +1,36 @@
+<!-- 
+  FULL WIDTH IMAGE COMPONENT
+  Usage: Copy this entire block into your project.html, then replace:
+  - [IMAGE-URL] with your image URL
+  - [IMAGE-ALT] with alt text
+  - [CAPTION] with optional caption
+-->
+<div class="component-full-width-image">
+    <style>
+        .component-full-width-image {
+            margin: calc(var(--spacing-unit, 1rem) * 2) 0;
+            width: 100%;
+        }
+        .full-width-image-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+        .full-width-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .full-width-image-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: calc(var(--spacing-unit, 1rem) * 1);
+            text-align: center;
+        }
+    </style>
+    
+    <div class="full-width-image-wrapper">
+        <img src="[IMAGE-URL]" alt="[IMAGE-ALT]">
+    </div>
+    <div class="full-width-image-caption">[CAPTION]</div>
+</div>
+

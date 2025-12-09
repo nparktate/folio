@@ -7,77 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-bg: #ffffff;
-            --color-text: #000000;
-            --color-border: #e0e0e0;
-            --spacing-unit: 1rem;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.6;
-            padding: calc(var(--spacing-unit) * 2);
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        #list-thumbnail {
-            display: none;
-        }
-
-        .project-header {
-            margin-bottom: calc(var(--spacing-unit) * 3);
-            padding-bottom: calc(var(--spacing-unit) * 2);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .project-name {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            margin-bottom: calc(var(--spacing-unit) * 1.5);
-            font-family: 'Inter', sans-serif;
-        }
-
-        .project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: calc(var(--spacing-unit) * 2);
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: calc(var(--spacing-unit) * 0.5);
-        }
-
-        .meta-label {
-            font-weight: 600;
-            color: var(--color-text);
-        }
-
-        .project-content {
-            margin-top: calc(var(--spacing-unit) * 3);
-        }
-
-        .project-content img,
-        .project-content video {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: var(--spacing-unit);
-        }
-    </style>
+    <link rel="stylesheet" href="styles/project.css">
 </head>
 <body>
     <!-- Hidden thumbnail for list display -->
@@ -122,9 +52,46 @@
     </div>
 
     <div class="project-content">
-        <p>This is a placeholder project showcasing motion design work. Replace this content with your actual project details, images, and videos.</p>
-        <img src="https://picsum.photos/1200/800?random=1" alt="Project image">
+        <!-- Full Width Image Component -->
+        <div data-component="full-width-image" 
+             data-imageurl="https://picsum.photos/1200/600?random=1" 
+             data-imagealt="Project hero image"
+             data-caption="Hero frame from motion design reel">
+        </div>
+
+        <!-- Image Carousel Component -->
+        <div data-component="image-carousel" 
+             data-images='["https://picsum.photos/1200/800?random=10","https://picsum.photos/1200/800?random=11","https://picsum.photos/1200/800?random=12"]'
+             data-captions='["Animation sequence frame 1","Animation sequence frame 2","Animation sequence frame 3"]'
+             data-alts='["Frame 1","Frame 2","Frame 3"]'
+             data-uniqueid="proj1">
+        </div>
+
+        <!-- Title + Paragraph (Right) -->
+        <div data-component="text-block" 
+             data-variant="title-paragraph"
+             data-textcontent="<h2>Project Overview</h2><p>This motion design reel showcases a collection of animated sequences created over the past year. Each piece demonstrates a unique approach to visual storytelling, combining technical skill with creative vision. The work spans various styles and techniques, from minimalist typography animations to complex 3D motion graphics.</p>" 
+             data-textalign="right">
+        </div>
+
+        <!-- Paragraph Only (Right) -->
+        <div data-component="text-block" 
+             data-variant="paragraph"
+             data-textcontent="<p>The reel was compiled to highlight the range and depth of motion design capabilities, serving as both a portfolio piece and a testament to the evolution of creative work throughout different projects and client collaborations.</p>" 
+             data-textalign="right">
+        </div>
+
+        <!-- Quote (Right) -->
+        <div data-component="text-block" 
+             data-variant="quote"
+             data-quotetext="Motion design is the bridge between static graphics and film. It's where time becomes a canvas, and every frame tells part of a larger story."
+             data-quoteauthor="Nicholas Park"
+             data-textalign="right">
+        </div>
     </div>
+
+    <!-- Component Loader - must be included for components to work -->
+    <script src="components/component-loader.js"></script>
 
     <script>
         // Auto-populate visible fields from metadata
