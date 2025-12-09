@@ -2,6 +2,15 @@
 
 A minimal portfolio website for motion design, GFX, video, and photo work.
 
+## Quick Start (Local Dev)
+
+```bash
+python3 server.py
+```
+Then open: http://localhost:8000
+
+---
+
 ## Local Development
 
 Due to browser CORS restrictions, you need to run a local server to view the site. **Do not open `index.html` directly in your browser** - use one of these methods:
