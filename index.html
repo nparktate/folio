@@ -316,8 +316,10 @@
         /* Projects Section */
         .projects-section {
             width: 100vw;
-            padding: calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 1.5);
+            padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 1.5);
             max-width: 100%;
+            background: #000;
+            color: #fff;
         }
 
         .tabs-row {
@@ -325,7 +327,7 @@
             justify-content: space-between;
             align-items: flex-end;
             margin-bottom: calc(var(--spacing-unit) * 3);
-            border-bottom: 2px solid var(--color-border);
+            border-bottom: 2px solid #333;
             padding-bottom: calc(var(--spacing-unit) * 0.5);
             gap: calc(var(--spacing-unit) * 2);
         }
@@ -362,19 +364,19 @@
         }
 
         .filter-select:hover {
-            color: var(--color-text);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         }
 
         .filter-select:focus {
             outline: none;
-            border-bottom-color: var(--color-text);
+            border-bottom-color: #fff;
         }
 
         .filter-select.active {
-            color: var(--color-text);
+            color: #fff;
             font-weight: 600;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         }
 
         @media (max-width: 850px) {
@@ -450,7 +452,7 @@
             font-family: inherit;
             font-size: 0.95rem;
             font-weight: 700;
-            color: #666;
+            color: #888;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             margin-bottom: calc(var(--spacing-unit) * -0.75);
@@ -461,12 +463,12 @@
         }
 
         .tab:hover {
-            color: var(--color-text);
+            color: #fff;
         }
 
         .tab.active {
-            color: var(--color-text);
-            border-bottom-color: var(--color-text);
+            color: #fff;
+            border-bottom-color: #fff;
         }
 
         .projects-list {
@@ -478,7 +480,7 @@
             grid-template-columns: 80px 1fr;
             gap: calc(var(--spacing-unit) * 2);
             padding: calc(var(--spacing-unit) * 1.5) 0;
-            border-bottom: 1px solid var(--color-border);
+            border-bottom: 1px solid #333;
             cursor: pointer;
             transition: background 0.2s;
             text-decoration: none;
@@ -492,7 +494,7 @@
         }
 
         .project-row:hover {
-            background: var(--color-hover);
+            background: #111;
         }
 
         .project-row:last-child {
@@ -520,7 +522,7 @@
 
         .project-meta-item {
             font-size: 0.9rem;
-            color: #666;
+            color: #aaa;
         }
 
         .project-meta-label {
@@ -585,7 +587,7 @@
             .project-meta-label {
                 display: inline;
                 font-weight: 600;
-                color: var(--color-text);
+                color: #fff;
                 margin-right: calc(var(--spacing-unit) * 0.5);
             }
         }
@@ -593,13 +595,13 @@
         .loading {
             text-align: center;
             padding: calc(var(--spacing-unit) * 4);
-            color: #666;
+            color: #888;
         }
 
         .empty-state {
             text-align: center;
             padding: calc(var(--spacing-unit) * 4);
-            color: #666;
+            color: #888;
         }
 
         /* Marquee */
@@ -608,15 +610,17 @@
             background: #000;
             overflow: hidden;
             white-space: nowrap;
-            padding: 0;
+            padding: 0.4rem 0;
             line-height: 1;
         }
 
         .marquee.top {
             border-top: 1px solid #fff;
+            border-bottom: 2px solid #333;
         }
 
         .marquee.bottom {
+            border-top: 2px solid #333;
             border-bottom: 1px solid #fff;
         }
 
@@ -625,7 +629,8 @@
             position: relative;
             width: 100vw;
             height: 100px;
-            overflow: visible;
+            overflow-x: hidden;
+            overflow-y: visible;
             background: #fff;
             pointer-events: none;
         }
