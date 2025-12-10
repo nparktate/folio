@@ -59,6 +59,17 @@ body {
     color: var(--color-text);
 }
 
+@media (max-width: 500px) {
+    .project-name {
+        line-height: 1.1;
+    }
+
+    .project-meta {
+        flex-direction: column;
+        gap: calc(var(--spacing-unit) * 0.5);
+    }
+}
+
 .project-content {
     margin-top: calc(var(--spacing-unit) * 3);
 }

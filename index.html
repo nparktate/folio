@@ -168,6 +168,7 @@
             .subtitle-section {
                 padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 1.5);
                 padding-bottom: calc(var(--spacing-unit) * 1.5);
+                font-size: 0.75rem;
             }
 
             .subtitle-grid {
@@ -193,6 +194,12 @@
             }
         }
 
+        @media (max-width: 400px) {
+            .subtitle-section {
+                font-size: 0.65rem;
+            }
+        }
+
         /* Mobile Social Links Footer - Hidden by default */
         .mobile-social-footer {
             display: none !important;
@@ -203,23 +210,28 @@
             .mobile-social-footer {
                 display: block !important;
                 width: 100vw;
-                padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 1.5);
+                padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
                 text-align: center;
-                border-top: 1px solid var(--color-border);
-                margin-top: calc(var(--spacing-unit) * 4);
+                background: #000;
+                margin-top: 0;
                 box-sizing: border-box;
             }
 
             .mobile-social-footer .subtitle-links {
                 display: flex;
                 flex-direction: row;
-                gap: calc(var(--spacing-unit) * 1.5);
+                gap: calc(var(--spacing-unit) * 2);
                 justify-content: center;
                 align-items: center;
             }
 
             .mobile-social-footer .subtitle-link {
-                font-size: 0.9rem;
+                font-size: 1.1rem;
+                color: #fff;
+            }
+
+            .mobile-social-footer .subtitle-link.linkedin {
+                font-weight: 700;
             }
         }
 
@@ -265,46 +277,40 @@
 
         .unmute-button {
             position: absolute;
-            bottom: calc(var(--spacing-unit) * 1.5);
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
+            bottom: calc(var(--spacing-unit) * 1);
+            right: calc(var(--spacing-unit) * 1);
+            background: rgba(0, 0, 0, 0.5);
             color: #fff;
-            border: 1px solid #fff;
-            padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1);
+            border: none;
+            padding: calc(var(--spacing-unit) * 0.5);
             cursor: pointer;
-            font-family: inherit;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: background 0.2s, color 0.2s;
+            font-size: 1.25rem;
+            line-height: 1;
+            transition: background 0.2s, transform 0.2s;
             z-index: 10;
+            border-radius: 4px;
         }
 
         @media (min-width: 640px) {
             .unmute-button {
-                top: calc(var(--spacing-unit) * 2);
-                bottom: auto;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
-                font-size: 0.9rem;
-                border: 2px solid #fff;
+                bottom: calc(var(--spacing-unit) * 1.5);
+                right: calc(var(--spacing-unit) * 1.5);
+                font-size: 1.5rem;
+                padding: calc(var(--spacing-unit) * 0.6);
             }
         }
 
         .unmute-button:hover {
-            background: #fff;
-            color: #000;
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
         }
 
         .unmute-button.muted::before {
-            content: "🔇 ";
+            content: "🔇";
         }
 
         .unmute-button.unmuted::before {
-            content: "🔊 ";
+            content: "🔊";
         }
 
         /* Projects Section */
@@ -314,20 +320,135 @@
             max-width: 100%;
         }
 
-        .tabs {
+        .tabs-row {
             display: flex;
-            gap: calc(var(--spacing-unit) * 1);
+            justify-content: space-between;
+            align-items: flex-end;
             margin-bottom: calc(var(--spacing-unit) * 3);
             border-bottom: 2px solid var(--color-border);
             padding-bottom: calc(var(--spacing-unit) * 0.5);
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 1);
+        }
+
+        .filters {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 0.75);
+            align-items: center;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+        }
+
+        .filter-select {
+            padding: 0.4rem 1.2rem 0.4rem 0.1rem;
+            font-size: 0.8rem;
+            font-family: inherit;
+            border: none;
+            border-bottom: 1px solid transparent;
+            border-radius: 0;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            transition: color 0.2s, border-color 0.2s;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+        }
+
+        .filter-select:hover {
+            color: var(--color-text);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-bottom-color: var(--color-text);
+        }
+
+        .filter-select.active {
+            color: var(--color-text);
+            font-weight: 600;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        @media (max-width: 850px) {
+            .tabs-row {
+                gap: calc(var(--spacing-unit) * 1);
+            }
+
+            .tabs {
+                gap: calc(var(--spacing-unit) * 0.5);
+            }
+
+            .tab {
+                font-size: 0.8rem;
+                padding: calc(var(--spacing-unit) * 0.4) calc(var(--spacing-unit) * 0.5);
+            }
+
+            .filters {
+                gap: calc(var(--spacing-unit) * 0.4);
+            }
+
+            .filter-select {
+                font-size: 0.7rem;
+                padding-right: 1rem;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .projects-section {
+                padding-top: calc(var(--spacing-unit) * 2);
+            }
+
+            .tabs-row {
+                flex-direction: column;
+                align-items: center;
+                gap: calc(var(--spacing-unit) * 1.5);
+            }
+
+            .tabs {
+                justify-content: center;
+            }
+
+            .tab {
+                font-size: 0.9rem;
+                padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 0.75);
+            }
+
+            .filters {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .filter-select {
+                font-size: 0.7rem;
+                padding: 0.3rem 1rem 0.3rem 0.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filters {
+                display: flex;
+                flex-wrap: wrap;
+                max-width: 250px;
+                gap: calc(var(--spacing-unit) * 0.4);
+                row-gap: calc(var(--spacing-unit) * 0.6);
+            }
         }
 
         .tab {
-            padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
+            padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1);
             background: none;
             border: none;
             font-family: inherit;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #666;
             cursor: pointer;
@@ -336,6 +457,7 @@
             transition: color 0.2s, border-color 0.2s;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            flex-shrink: 0;
         }
 
         .tab:hover {
@@ -361,6 +483,12 @@
             transition: background 0.2s;
             text-decoration: none;
             color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-row-bg {
+            display: none;
         }
 
         .project-row:hover {
@@ -400,19 +528,54 @@
         }
 
         @media (max-width: 639px) {
+            .tabs-row {
+                margin-bottom: calc(var(--spacing-unit) * 1.5);
+            }
+
+            .projects-list {
+                display: flex;
+                flex-direction: column;
+                gap: calc(var(--spacing-unit) * 1);
+            }
+
             .project-row {
                 grid-template-columns: 60px 1fr;
                 gap: calc(var(--spacing-unit) * 1);
+                padding: 0;
+                align-items: stretch;
+                border-bottom: none;
+            }
+
+            .project-row-bg {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-size: cover;
+                background-position: center;
+                opacity: 0.15;
+                filter: blur(4px);
+                transform: scale(1.1);
+                z-index: 0;
             }
 
             .project-thumbnail {
                 width: 60px;
-                height: 60px;
+                height: 100%;
+                min-height: 80px;
+                object-fit: cover;
+                position: relative;
+                z-index: 1;
             }
 
             .project-info {
                 grid-template-columns: 1fr;
                 gap: calc(var(--spacing-unit) * 0.5);
+                padding: calc(var(--spacing-unit) * 1) 0;
+                position: relative;
+                z-index: 1;
             }
 
             .project-meta-item {
@@ -437,6 +600,229 @@
             text-align: center;
             padding: calc(var(--spacing-unit) * 4);
             color: #666;
+        }
+
+        /* Marquee */
+        .marquee {
+            width: 100vw;
+            background: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 0.35rem 0;
+        }
+
+        .marquee.top {
+            border-top: 1px solid #fff;
+        }
+
+        .marquee.bottom {
+            border-bottom: 1px solid #fff;
+        }
+
+        /* Dino Game */
+        .dino-game {
+            position: relative;
+            width: 100vw;
+            height: 100px;
+            overflow: visible;
+            background: #fff;
+            pointer-events: none;
+        }
+
+        .dino-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 12px;
+            background: url('assets/images/1600px-Chromium_T-Rex-horizon.png') repeat-x;
+            background-size: auto 100%;
+            animation: ground-scroll 8s linear infinite;
+        }
+
+        @keyframes ground-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .dino {
+            position: absolute;
+            bottom: 6px;
+            left: 10%;
+            width: 44px;
+            height: 48px;
+            background: url('assets/images/The_Lonely_T_Rex.png') no-repeat center bottom;
+            background-size: contain;
+            animation: dino-run 0.2s steps(2) infinite;
+            z-index: 10;
+        }
+
+        .dino.jump {
+            animation: dino-jump 0.8s ease-in-out forwards;
+        }
+
+        .dino.duck {
+            height: 30px;
+            width: 58px;
+            background-image: url('assets/images/Chrome_T-Rex_Right_Duck.png');
+            bottom: 12px;
+        }
+
+        @keyframes dino-jump {
+            0% { bottom: 6px; }
+            30% { bottom: 65px; }
+            50% { bottom: 65px; }
+            70% { bottom: 65px; }
+            100% { bottom: 6px; }
+        }
+
+        .obstacle {
+            position: absolute;
+            bottom: 12px;
+            z-index: 8;
+            animation: obstacle-move 4s linear forwards;
+        }
+
+        .obstacle.cactus {
+            width: 25px;
+            height: 50px;
+            bottom: 2px;
+            background: url('assets/images/Cactus_Chrome_Dino.png') no-repeat center bottom;
+            background-size: contain;
+        }
+
+        .obstacle.pterodactyl {
+            width: 46px;
+            height: 40px;
+            bottom: 50px;
+            background: url('assets/images/Chrome_Pterodactyl.png') no-repeat center;
+            background-size: contain;
+            animation: obstacle-move 3.5s linear forwards, pterodactyl-flap 0.3s steps(2) infinite;
+        }
+
+        @keyframes obstacle-move {
+            0% { right: -60px; }
+            100% { right: 110%; }
+        }
+
+        @keyframes pterodactyl-flap {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.9); }
+        }
+
+        .cloud {
+            position: absolute;
+            width: 46px;
+            height: 14px;
+            background: url('assets/images/Chromium_T-Rex-cloud.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 2;
+            animation: cloud-move 12s linear forwards;
+        }
+
+        @keyframes cloud-move {
+            0% { right: -60px; }
+            100% { right: 110%; }
+        }
+
+        @media (max-width: 639px) {
+            .dino-game {
+                height: 60px;
+            }
+
+            .dino {
+                width: 30px;
+                height: 33px;
+                left: 8%;
+            }
+
+            .dino.duck {
+                width: 40px;
+                height: 20px;
+            }
+
+            .obstacle.cactus {
+                width: 17px;
+                height: 35px;
+            }
+
+            .obstacle.pterodactyl {
+                width: 32px;
+                height: 28px;
+                bottom: 35px;
+            }
+
+            .cloud {
+                width: 32px;
+                height: 10px;
+            }
+
+            @keyframes dino-jump {
+                0% { bottom: 12px; }
+                50% { bottom: 45px; }
+                100% { bottom: 12px; }
+            }
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee-left 20s linear infinite;
+        }
+
+        .marquee.reverse .marquee-content {
+            animation: marquee-right 20s linear infinite;
+        }
+
+        .marquee-text {
+            display: inline;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            padding: 0 0.4rem;
+        }
+
+        @keyframes marquee-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes marquee-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Tag Pills */
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            align-items: center;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.1rem 0.4rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #fff;
+            white-space: nowrap;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 639px) {
+            .project-tags {
+                margin-top: 0.25rem;
+            }
+
+            .tag-pill {
+                font-size: 0.7rem;
+                padding: 0.08rem 0.35rem;
+            }
         }
     </style>
 </head>
@@ -467,6 +853,12 @@
         </div>
     </section>
 
+    <!-- Dino Game Section -->
+    <div class="dino-game" id="dino-game">
+        <div class="dino-ground"></div>
+        <div class="dino" id="dino"></div>
+    </div>
+
     <!-- Video Reel Section -->
     <section class="video-section">
         <div class="video-container desktop">
@@ -474,26 +866,45 @@
                 <source src="assets/videos/reel-21-9.mp4" type="video/mp4">
                 <!-- Add fallback sources if needed -->
             </video>
-            <button class="unmute-button muted" id="unmute-desktop" onclick="toggleMute('desktop')">
-                Unmute
-            </button>
+            <button class="unmute-button muted" id="unmute-desktop" onclick="toggleMute('desktop')"></button>
         </div>
         <div class="video-container mobile">
             <video id="reel-mobile" autoplay muted loop playsinline onerror="this.style.display='none'; this.nextElementSibling.style.display='none';">
                 <source src="assets/videos/reel-4-5.mp4" type="video/mp4">
                 <!-- Add fallback sources if needed -->
             </video>
-            <button class="unmute-button muted" id="unmute-mobile" onclick="toggleMute('mobile')">
-                Unmute
-            </button>
+            <button class="unmute-button muted" id="unmute-mobile" onclick="toggleMute('mobile')"></button>
         </div>
     </section>
 
+    <!-- Marquee Top -->
+    <div class="marquee top">
+        <div class="marquee-content">
+            <span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span>
+        </div>
+    </div>
+
     <!-- Projects Section -->
     <section class="projects-section">
-        <div class="tabs">
-            <button class="tab active" data-category="work" onclick="switchTab('work')">Work</button>
-            <button class="tab" data-category="concepts" onclick="switchTab('concepts')">Concepts</button>
+        <div class="tabs-row">
+            <div class="tabs">
+                <button class="tab active" data-category="work" onclick="switchTab('work')">Work</button>
+                <button class="tab" data-category="concepts" onclick="switchTab('concepts')">Concepts</button>
+            </div>
+            <div class="filters">
+                <select class="filter-select" id="filter-year" onchange="applyFilters()">
+                    <option value="">All Years</option>
+                </select>
+                <select class="filter-select" id="filter-tools" onchange="applyFilters()">
+                    <option value="">All Tools & Applications</option>
+                </select>
+                <select class="filter-select" id="filter-type" onchange="applyFilters()">
+                    <option value="">All Types</option>
+                </select>
+                <select class="filter-select" id="filter-collaborators" onchange="applyFilters()">
+                    <option value="">All Collaborators</option>
+                </select>
+            </div>
         </div>
 
         <div class="projects-list" id="projects-list">
@@ -502,8 +913,206 @@
     </section>
 
     <script>
+        // ============ DINO GAME AUTO-PLAY ============
+        (function() {
+            const gameContainer = document.getElementById('dino-game');
+            const dino = document.getElementById('dino');
+            
+            // Spawn obstacles
+            function spawnObstacle() {
+                const obstacle = document.createElement('div');
+                obstacle.className = 'obstacle';
+                
+                // Random: cactus or pterodactyl (50/50)
+                const isPterodactyl = Math.random() > 0.5;
+                
+                if (isPterodactyl) {
+                    obstacle.classList.add('pterodactyl');
+                    // Dino ducks for pterodactyl
+                    setTimeout(() => {
+                        dino.classList.add('duck');
+                        setTimeout(() => dino.classList.remove('duck'), 800);
+                    }, 2400);
+                } else {
+                    obstacle.classList.add('cactus');
+                    // Dino jumps for cactus
+                    setTimeout(() => {
+                        dino.classList.add('jump');
+                        setTimeout(() => dino.classList.remove('jump'), 850);
+                    }, 2900);
+                }
+                
+                gameContainer.appendChild(obstacle);
+                
+                // Remove after animation
+                setTimeout(() => obstacle.remove(), 4500);
+            }
+            
+            // Spawn clouds
+            function spawnCloud() {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.top = (5 + Math.random() * 25) + 'px';
+                gameContainer.appendChild(cloud);
+                
+                setTimeout(() => cloud.remove(), 12500);
+            }
+            
+            // Start the game loops
+            setInterval(spawnObstacle, 3000 + Math.random() * 2000);
+            setInterval(spawnCloud, 4000 + Math.random() * 3000);
+            
+            // Initial spawns
+            setTimeout(spawnCloud, 1000);
+            setTimeout(spawnObstacle, 2000);
+        })();
+        // ============ END DINO GAME ============
+
         let allProjects = [];
         let currentCategory = 'work';
+        let tagColorMap = {};
+        
+        // Filter state
+        let filters = {
+            year: '',
+            tools: '',
+            type: '',
+            collaborators: ''
+        };
+
+        // Tag color palette - vibrant colors that work well with white text
+        const tagColors = [
+            '#e63946', '#f4a261', '#2a9d8f', '#264653', '#6a4c93',
+            '#1982c4', '#8ac926', '#ff595e', '#6a0572', '#ab83a1',
+            '#3a86a7', '#fb5607', '#ff006e', '#8338ec', '#3a5a40',
+            '#bc6c25', '#0077b6', '#9b5de5', '#f15bb5', '#00bbf9'
+        ];
+
+        // Assign colors to all unique tags
+        function assignTagColors() {
+            const allTags = new Set();
+            allProjects.forEach(project => {
+                if (project.tools) {
+                    project.tools.forEach(tool => allTags.add(tool));
+                }
+            });
+
+            // Shuffle the color palette for variety on each load
+            const shuffledColors = [...tagColors].sort(() => Math.random() - 0.5);
+
+            // Assign colors to each unique tag
+            let colorIndex = 0;
+            allTags.forEach(tag => {
+                tagColorMap[tag] = shuffledColors[colorIndex % shuffledColors.length];
+                colorIndex++;
+            });
+        }
+
+        // Get color for a specific tag
+        function getTagColor(tag) {
+            return tagColorMap[tag] || '#666';
+        }
+
+        // Render tags as pills
+        function renderTagPills(tools) {
+            if (!tools || tools.length === 0) return '';
+            return tools.map(tool => 
+                `<span class="tag-pill" style="background-color: ${getTagColor(tool)}">${tool}</span>`
+            ).join('');
+        }
+
+        // Populate filter dropdowns based on current category's projects
+        function populateFilters() {
+            const categoryProjects = allProjects.filter(p => p.category === currentCategory);
+            
+            // Collect unique values
+            const years = new Set();
+            const tools = new Set();
+            const types = new Set();
+            const collaborators = new Set();
+            
+            categoryProjects.forEach(project => {
+                // Years from dateStart
+                if (project.dateStart) {
+                    years.add(new Date(project.dateStart).getFullYear());
+                }
+                if (project.dateEnd) {
+                    years.add(new Date(project.dateEnd).getFullYear());
+                }
+                
+                // Tools
+                if (project.tools) {
+                    project.tools.forEach(tool => tools.add(tool));
+                }
+                
+                // Work types
+                if (project.workType) {
+                    types.add(project.workType);
+                }
+                
+                // Collaborators
+                if (project.collaborators) {
+                    project.collaborators.forEach(collab => collaborators.add(collab));
+                }
+            });
+            
+            // Populate year dropdown
+            const yearSelect = document.getElementById('filter-year');
+            yearSelect.innerHTML = '<option value="">All Years</option>' + 
+                [...years].sort((a, b) => b - a).map(year => 
+                    `<option value="${year}" ${filters.year == year ? 'selected' : ''}>${year}</option>`
+                ).join('');
+            
+            // Populate tools dropdown
+            const toolsSelect = document.getElementById('filter-tools');
+            toolsSelect.innerHTML = '<option value="">All Tools & Applications</option>' + 
+                [...tools].sort().map(tool => 
+                    `<option value="${tool}" ${filters.tools === tool ? 'selected' : ''}>${tool}</option>`
+                ).join('');
+            
+            // Populate type dropdown
+            const typeSelect = document.getElementById('filter-type');
+            typeSelect.innerHTML = '<option value="">All Types</option>' + 
+                [...types].sort().map(type => 
+                    `<option value="${type}" ${filters.type === type ? 'selected' : ''}>${type}</option>`
+                ).join('');
+            
+            // Populate collaborators dropdown
+            const collabSelect = document.getElementById('filter-collaborators');
+            collabSelect.innerHTML = '<option value="">All Collaborators</option>' + 
+                '<option value="solo" ' + (filters.collaborators === 'solo' ? 'selected' : '') + '>Solo Projects</option>' +
+                [...collaborators].sort().map(collab => 
+                    `<option value="${collab}" ${filters.collaborators === collab ? 'selected' : ''}>${collab}</option>`
+                ).join('');
+            
+            // Update active states
+            updateFilterActiveStates();
+        }
+
+        // Update visual state of filters
+        function updateFilterActiveStates() {
+            document.getElementById('filter-year').classList.toggle('active', filters.year !== '');
+            document.getElementById('filter-tools').classList.toggle('active', filters.tools !== '');
+            document.getElementById('filter-type').classList.toggle('active', filters.type !== '');
+            document.getElementById('filter-collaborators').classList.toggle('active', filters.collaborators !== '');
+        }
+
+        // Apply filters from dropdowns
+        function applyFilters() {
+            filters.year = document.getElementById('filter-year').value;
+            filters.tools = document.getElementById('filter-tools').value;
+            filters.type = document.getElementById('filter-type').value;
+            filters.collaborators = document.getElementById('filter-collaborators').value;
+            
+            updateFilterActiveStates();
+            renderProjects();
+        }
+
+        // Reset filters
+        function resetFilters() {
+            filters = { year: '', tools: '', type: '', collaborators: '' };
+            populateFilters();
+        }
 
         // Video unmute functionality
         function toggleMute(version) {
@@ -514,12 +1123,10 @@
                 video.muted = false;
                 button.classList.remove('muted');
                 button.classList.add('unmuted');
-                button.textContent = 'Mute';
             } else {
                 video.muted = true;
                 button.classList.remove('unmuted');
                 button.classList.add('muted');
-                button.textContent = 'Unmute';
             }
         }
 
@@ -535,7 +1142,8 @@
                 }
             });
 
-            // Render filtered projects
+            // Reset filters and repopulate for new category
+            resetFilters();
             renderProjects();
         }
 
@@ -620,6 +1228,8 @@
                 });
 
                 allProjects = projects;
+                assignTagColors();
+                populateFilters();
                 renderProjects();
             } catch (error) {
                 console.error('Error loading projects:', error);
@@ -630,12 +1240,46 @@
 
         // Render projects list
         function renderProjects() {
-            const filteredProjects = allProjects.filter(p => p.category === currentCategory);
+            let filteredProjects = allProjects.filter(p => p.category === currentCategory);
+            
+            // Apply filters
+            if (filters.year) {
+                filteredProjects = filteredProjects.filter(p => {
+                    const startYear = new Date(p.dateStart).getFullYear();
+                    const endYear = p.dateEnd ? new Date(p.dateEnd).getFullYear() : startYear;
+                    return startYear <= filters.year && filters.year <= endYear;
+                });
+            }
+            
+            if (filters.tools) {
+                filteredProjects = filteredProjects.filter(p => 
+                    p.tools && p.tools.includes(filters.tools)
+                );
+            }
+            
+            if (filters.type) {
+                filteredProjects = filteredProjects.filter(p => 
+                    p.workType === filters.type
+                );
+            }
+            
+            if (filters.collaborators) {
+                if (filters.collaborators === 'solo') {
+                    filteredProjects = filteredProjects.filter(p => 
+                        !p.collaborators || p.collaborators.length === 0
+                    );
+                } else {
+                    filteredProjects = filteredProjects.filter(p => 
+                        p.collaborators && p.collaborators.includes(filters.collaborators)
+                    );
+                }
+            }
+            
             const listContainer = document.getElementById('projects-list');
 
             if (filteredProjects.length === 0) {
                 listContainer.innerHTML = 
-                    `<div class="empty-state">No ${currentCategory} projects found.</div>`;
+                    `<div class="empty-state">No ${currentCategory} projects found${Object.values(filters).some(f => f) ? ' matching filters' : ''}.</div>`;
                 return;
             }
 
@@ -643,25 +1287,26 @@
                 const dateStart = new Date(project.dateStart);
                 const dateEnd = project.dateEnd ? new Date(project.dateEnd) : null;
                 const dateStr = dateEnd && dateEnd.getTime() !== dateStart.getTime()
-                    ? `${dateStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - ${dateEnd.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
+                    ? `${dateStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} → ${dateEnd.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
                     : dateStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
                 return `
                     <a href="${project.projectFile}" class="project-row">
+                        <div class="project-row-bg" style="background-image: url('${project.thumbnailSrc || ''}')"></div>
                         <img src="${project.thumbnailSrc || ''}" alt="${project.name}" class="project-thumbnail" onerror="this.style.display='none'">
                         <div class="project-info">
                             <div class="project-name">${project.name}</div>
                             <div class="project-meta-item">
                                 <span class="project-meta-label">Date:</span>${dateStr}
                             </div>
-                            <div class="project-meta-item">
-                                <span class="project-meta-label">Tools:</span>${project.tools.join(', ')}
+                            <div class="project-meta-item project-tags">
+                                <span class="project-meta-label">Tools:</span>${renderTagPills(project.tools)}
                             </div>
                             <div class="project-meta-item">
                                 <span class="project-meta-label">Type:</span>${project.workType}
                             </div>
                             <div class="project-meta-item">
-                                <span class="project-meta-label">Collaborators:</span>${project.collaborators && project.collaborators.length > 0 ? project.collaborators.join(', ') : 'None'}
+                                <span class="project-meta-label">Collaborators:</span>${project.collaborators && project.collaborators.length > 0 ? project.collaborators.join(', ') : 'Solo Project'}
                             </div>
                         </div>
                     </a>
@@ -673,11 +1318,18 @@
         loadProjects();
     </script>
 
+    <!-- Marquee Bottom -->
+    <div class="marquee reverse bottom">
+        <div class="marquee-content">
+            <span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span>
+        </div>
+    </div>
+
     <!-- Mobile Social Links Footer (only visible on mobile) -->
     <footer class="mobile-social-footer">
         <div class="subtitle-links">
             <a href="https://instagram.com/nparktate" target="_blank" rel="noopener noreferrer" class="subtitle-link">📷 Instagram</a>
-            <a href="https://linkedin.com/in/linkparkdesign" target="_blank" rel="noopener noreferrer" class="subtitle-link">💼 LinkedIn</a>
+            <a href="https://www.linkedin.com/in/linkparkdesign" target="_blank" rel="noopener noreferrer" class="subtitle-link linkedin">💼 LinkedIn</a>
         </div>
     </footer>
 </body>
