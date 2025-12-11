@@ -26,6 +26,11 @@
             box-sizing: border-box;
         }
 
+        /* GMod missing texture easter egg - visible on mobile overscroll */
+        html {
+            background: repeating-conic-gradient(#ff00ff 0% 25%, #000000 0% 50%) 50% / 40px 40px;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
             background: var(--color-bg);
@@ -47,6 +52,7 @@
             letter-spacing: -0.02em;
             overflow: hidden;
             box-sizing: border-box;
+            background: #fff;
         }
 
         .name-first {
@@ -89,6 +95,7 @@
             font-size: 0.9rem;
             line-height: 1.6;
             box-sizing: border-box;
+            background: #fff;
         }
 
         .subtitle-grid {
@@ -210,9 +217,9 @@
             .mobile-social-footer {
                 display: block !important;
                 width: 100vw;
-                padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
+                padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 1.5);
                 text-align: center;
-                background: #000;
+                background: #fff;
                 margin-top: 0;
                 box-sizing: border-box;
             }
@@ -227,7 +234,7 @@
 
             .mobile-social-footer .subtitle-link {
                 font-size: 1.1rem;
-                color: #fff;
+                color: #000;
             }
 
             .mobile-social-footer .subtitle-link.linkedin {
@@ -246,27 +253,7 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-        }
-
-        .video-container.desktop {
             aspect-ratio: 21 / 9;
-            display: none;
-        }
-
-        .video-container.mobile {
-            aspect-ratio: 4 / 5;
-            display: block;
-        }
-        
-        /* Note: Mobile reel is 4:5 (portrait/tall), Desktop reel is 21:9 (ultrawide) */
-
-        @media (min-width: 640px) {
-            .video-container.desktop {
-                display: block;
-            }
-            .video-container.mobile {
-                display: none;
-            }
         }
 
         .video-container video {
@@ -275,10 +262,23 @@
             object-fit: cover;
         }
 
-        .unmute-button {
+        .video-controls {
             position: absolute;
             bottom: calc(var(--spacing-unit) * 1);
             right: calc(var(--spacing-unit) * 1);
+            display: flex;
+            gap: calc(var(--spacing-unit) * 0.5);
+            z-index: 10;
+        }
+
+        @media (min-width: 640px) {
+            .video-controls {
+                bottom: calc(var(--spacing-unit) * 1.5);
+                right: calc(var(--spacing-unit) * 1.5);
+            }
+        }
+
+        .video-btn {
             background: rgba(0, 0, 0, 0.5);
             color: #fff;
             border: none;
@@ -287,30 +287,31 @@
             font-size: 1.25rem;
             line-height: 1;
             transition: background 0.2s, transform 0.2s;
-            z-index: 10;
             border-radius: 4px;
         }
 
         @media (min-width: 640px) {
-            .unmute-button {
-                bottom: calc(var(--spacing-unit) * 1.5);
-                right: calc(var(--spacing-unit) * 1.5);
+            .video-btn {
                 font-size: 1.5rem;
                 padding: calc(var(--spacing-unit) * 0.6);
             }
         }
 
-        .unmute-button:hover {
+        .video-btn:hover {
             background: rgba(0, 0, 0, 0.8);
             transform: scale(1.1);
         }
 
-        .unmute-button.muted::before {
+        .mute-btn.muted::before {
             content: "🔇";
         }
 
-        .unmute-button.unmuted::before {
+        .mute-btn.unmuted::before {
             content: "🔊";
+        }
+
+        .fullscreen-btn::before {
+            content: "⛶";
         }
 
         /* Projects Section */
@@ -405,7 +406,7 @@
 
         @media (max-width: 639px) {
             .projects-section {
-                padding-top: calc(var(--spacing-unit) * 2);
+                padding-top: calc(var(--spacing-unit) * 1);
             }
 
             .tabs-row {
@@ -604,25 +605,6 @@
             color: #888;
         }
 
-        /* Marquee */
-        .marquee {
-            width: 100vw;
-            background: #000;
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 0.4rem 0;
-            line-height: 1;
-        }
-
-        .marquee.top {
-            border-top: 1px solid #fff;
-            border-bottom: 2px solid #333;
-        }
-
-        .marquee.bottom {
-            border-top: 2px solid #333;
-            border-bottom: 1px solid #fff;
-        }
 
         /* Dino Game */
         .dino-game {
@@ -771,40 +753,6 @@
             }
         }
 
-        .marquee-content {
-            display: inline-block;
-            animation: marquee-left 20s linear infinite;
-        }
-
-        .marquee.reverse .marquee-content {
-            animation: marquee-right 20s linear infinite;
-        }
-
-        .marquee-text {
-            display: inline;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            font-weight: 900;
-            font-size: 2.8rem;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            padding: 0 0.15rem;
-        }
-
-        .marquee-text.light {
-            font-weight: 300;
-        }
-
-        @keyframes marquee-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        @keyframes marquee-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-        }
-
         /* Tag Pills */
         .project-tags {
             display: flex;
@@ -871,28 +819,16 @@
 
     <!-- Video Reel Section -->
     <section class="video-section">
-        <div class="video-container desktop">
-            <video id="reel-desktop" autoplay muted loop playsinline onerror="this.style.display='none'; this.nextElementSibling.style.display='none';">
+        <div class="video-container">
+            <video id="reel-video" autoplay muted loop playsinline>
                 <source src="assets/videos/reel-21-9.mp4" type="video/mp4">
-                <!-- Add fallback sources if needed -->
             </video>
-            <button class="unmute-button muted" id="unmute-desktop" onclick="toggleMute('desktop')"></button>
-        </div>
-        <div class="video-container mobile">
-            <video id="reel-mobile" autoplay muted loop playsinline onerror="this.style.display='none'; this.nextElementSibling.style.display='none';">
-                <source src="assets/videos/reel-4-5.mp4" type="video/mp4">
-                <!-- Add fallback sources if needed -->
-            </video>
-            <button class="unmute-button muted" id="unmute-mobile" onclick="toggleMute('mobile')"></button>
+            <div class="video-controls">
+                <button class="video-btn mute-btn muted" id="mute-btn" onclick="toggleMute()" aria-label="Toggle mute"></button>
+                <button class="video-btn fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen"></button>
+            </div>
         </div>
     </section>
-
-    <!-- Marquee Top -->
-    <div class="marquee top">
-        <div class="marquee-content">
-            <span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span>
-        </div>
-    </div>
 
     <!-- Projects Section -->
     <section class="projects-section">
@@ -1124,10 +1060,10 @@
             populateFilters();
         }
 
-        // Video unmute functionality
-        function toggleMute(version) {
-            const video = document.getElementById(`reel-${version}`);
-            const button = document.getElementById(`unmute-${version}`);
+        // Video mute toggle
+        function toggleMute() {
+            const video = document.getElementById('reel-video');
+            const button = document.getElementById('mute-btn');
             
             if (video.muted) {
                 video.muted = false;
@@ -1137,6 +1073,30 @@
                 video.muted = true;
                 button.classList.remove('unmuted');
                 button.classList.add('muted');
+            }
+        }
+
+        // Video fullscreen toggle
+        function toggleFullscreen() {
+            const video = document.getElementById('reel-video');
+            
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            } else {
+                // Enter fullscreen - use video element for better mobile support
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.webkitEnterFullscreen) {
+                    // iOS Safari fallback
+                    video.webkitEnterFullscreen();
+                }
             }
         }
 
@@ -1327,13 +1287,6 @@
         // Initialize on page load
         loadProjects();
     </script>
-
-    <!-- Marquee Bottom -->
-    <div class="marquee reverse bottom">
-        <div class="marquee-content">
-            <span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span><span class="marquee-text">PORTFOLIO</span><span class="marquee-text light">PORTFOLIO</span>
-        </div>
-    </div>
 
     <!-- Mobile Social Links Footer (only visible on mobile) -->
     <footer class="mobile-social-footer">

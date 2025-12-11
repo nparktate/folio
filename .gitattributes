@@ -1,4 +1,0 @@
-# Git LFS configuration for media assets
-# Ensure all assets directory files use LFS
-assets/videos/*.mp4 !text !filter !merge !diff
-* !text !filter !merge !diff

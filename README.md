@@ -56,13 +56,12 @@ Install the "Live Server" extension in VS Code, then right-click `index.html` an
 └── server.py              # Local development server
 ```
 
-## Video Reels
+## Video Reel
 
-Add your video reels to:
-- `assets/videos/reel-21-9.mp4` (desktop, 21:9 aspect ratio)
-- `assets/videos/reel-4-5.mp4` (mobile, 4:5 aspect ratio)
+Add your video reel to:
+- `assets/videos/reel-21-9.mp4` (21:9 ultrawide aspect ratio)
 
-These will automatically appear on the landing page when present.
+The video displays at 21:9 on all devices. On mobile, users can tap the fullscreen button to watch in landscape mode.
 
 ## Deployment to Cloudflare Pages
 
@@ -85,11 +84,3 @@ The `server.py` and `package.json` files are **only for local development** to a
 3. **Deploy** - Cloudflare will automatically deploy on every push to your main branch
 
 The site will be live at: `https://your-project-name.pages.dev`
-
-## Git LFS
-
-Large media files are tracked with Git LFS. Make sure Git LFS is installed and initialized:
-```bash
-git lfs install
-```
-
