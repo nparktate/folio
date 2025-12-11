@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NICHOLAS PARK</title>
+    <title>NICK TATE PARK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
@@ -48,12 +48,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: calc(var(--spacing-unit) * 1);
+            gap: calc(var(--spacing-unit) * 0.75);
         }
 
-        .name-first,
-        .name-last {
-            font-size: clamp(1.5rem, 7.5vw, 6rem);
+        .name-part {
+            font-size: clamp(1.2rem, 5.5vw, 5rem);
             line-height: 1;
             white-space: nowrap;
             flex-shrink: 0;
@@ -844,9 +843,11 @@
 <body>
     <!-- Name Section -->
     <section class="name-section">
-        <span class="name-first">NICHOLAS</span>
+        <span class="name-part">NICK</span>
         <span class="name-arrow"></span>
-        <span class="name-last">PARK</span>
+        <span class="name-part">TATE</span>
+        <span class="name-arrow"></span>
+        <span class="name-part">PARK</span>
     </section>
 
     <!-- Subtitle Section -->
