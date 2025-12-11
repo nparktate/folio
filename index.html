@@ -38,7 +38,7 @@
         .name-section {
             width: 100vw;
             padding: calc(var(--spacing-unit) * 1.5);
-            padding-left: calc(var(--spacing-unit) * 1.5 - 4px);
+            padding-left: calc(var(--spacing-unit) * 1.5 - 3px);
             padding-bottom: 0;
             font-family: 'Inter', sans-serif;
             font-weight: 900;
@@ -87,7 +87,7 @@
         @media (min-width: 640px) {
             .name-section {
                 padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2);
-                padding-left: calc(var(--spacing-unit) * 2 - 6px);
+                padding-left: calc(var(--spacing-unit) * 2 - 10px);
                 padding-bottom: 0;
             }
 
@@ -272,7 +272,25 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-            aspect-ratio: 21 / 9;
+        }
+
+        .video-container.mobile {
+            aspect-ratio: 1 / 1;
+            display: block;
+        }
+
+        .video-container.desktop {
+            aspect-ratio: 16 / 9;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .video-container.mobile {
+                display: none;
+            }
+            .video-container.desktop {
+                display: block;
+            }
         }
 
         .video-container video {
@@ -665,7 +683,7 @@
         }
 
         .dino.jump {
-            animation: dino-jump 0.8s ease-in-out forwards;
+            animation: dino-jump 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
         .dino.duck {
@@ -676,11 +694,37 @@
         }
 
         @keyframes dino-jump {
-            0% { bottom: 6px; }
-            30% { bottom: 65px; }
-            50% { bottom: 65px; }
-            70% { bottom: 65px; }
-            100% { bottom: 6px; }
+            0% { bottom: 6px; transform: scaleY(1); }
+            15% { transform: scaleY(1.1) scaleX(0.95); }
+            40% { bottom: 65px; transform: scaleY(1.05); }
+            60% { bottom: 65px; transform: scaleY(1); }
+            100% { bottom: 6px; transform: scaleY(0.95) scaleX(1.05); }
+        }
+
+        /* XP Popup */
+        .xp-popup {
+            position: absolute;
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: xp-float 1s ease-out forwards;
+            z-index: 20;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .xp-popup .plus-one {
+            color: #ffdd00;
+        }
+
+        .xp-popup .xp-text {
+            color: #00ff00;
+            margin-left: 3px;
+        }
+
+        @keyframes xp-float {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-25px); }
         }
 
         .obstacle {
@@ -701,7 +745,7 @@
         .obstacle.pterodactyl {
             width: 46px;
             height: 40px;
-            bottom: 50px;
+            bottom: 28px;
             background: url('assets/images/Chrome_Pterodactyl.png') no-repeat center;
             background-size: contain;
             animation: obstacle-move 3.5s linear forwards, pterodactyl-flap 0.3s steps(2) infinite;
@@ -757,7 +801,7 @@
             .obstacle.pterodactyl {
                 width: 32px;
                 height: 28px;
-                bottom: 35px;
+                bottom: 22px;
             }
 
             .cloud {
@@ -766,9 +810,15 @@
             }
 
             @keyframes dino-jump {
-                0% { bottom: 12px; }
-                50% { bottom: 45px; }
-                100% { bottom: 12px; }
+                0% { bottom: 12px; transform: scaleY(1); }
+                15% { transform: scaleY(1.1) scaleX(0.95); }
+                40% { bottom: 45px; transform: scaleY(1.05); }
+                60% { bottom: 45px; transform: scaleY(1); }
+                100% { bottom: 12px; transform: scaleY(0.95) scaleX(1.05); }
+            }
+
+            .xp-popup {
+                font-size: 12px;
             }
         }
 
@@ -839,13 +889,22 @@
 
     <!-- Video Reel Section -->
     <section class="video-section">
-        <div class="video-container">
-            <video id="reel-video" autoplay muted loop playsinline>
-                <source src="assets/videos/reel-21-9.mp4" type="video/mp4">
+        <div class="video-container mobile">
+            <video id="reel-mobile" autoplay muted loop playsinline>
+                <source src="assets/videos/reel-1-1.mp4" type="video/mp4">
             </video>
             <div class="video-controls">
-                <button class="video-btn mute-btn muted" id="mute-btn" onclick="toggleMute()" aria-label="Toggle mute"></button>
-                <button class="video-btn fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen"></button>
+                <button class="video-btn mute-btn muted" onclick="toggleMute('mobile')" aria-label="Toggle mute"></button>
+                <button class="video-btn fullscreen-btn" onclick="toggleFullscreen('mobile')" aria-label="Toggle fullscreen"></button>
+            </div>
+        </div>
+        <div class="video-container desktop">
+            <video id="reel-desktop" autoplay muted loop playsinline>
+                <source src="assets/videos/reel-16-9.mp4" type="video/mp4">
+            </video>
+            <div class="video-controls">
+                <button class="video-btn mute-btn muted" onclick="toggleMute('desktop')" aria-label="Toggle mute"></button>
+                <button class="video-btn fullscreen-btn" onclick="toggleFullscreen('desktop')" aria-label="Toggle fullscreen"></button>
             </div>
         </div>
     </section>
@@ -884,6 +943,27 @@
             const gameContainer = document.getElementById('dino-game');
             const dino = document.getElementById('dino');
             
+            // Check if mobile breakpoint
+            function isMobile() {
+                return window.innerWidth < 640;
+            }
+            
+            // Show +1 XP popup
+            function showXP() {
+                const popup = document.createElement('div');
+                popup.className = 'xp-popup';
+                popup.innerHTML = '<span class="plus-one">+1</span><span class="xp-text">XP</span>';
+                
+                // Position closer to dino
+                const dinoRect = dino.getBoundingClientRect();
+                const containerRect = gameContainer.getBoundingClientRect();
+                popup.style.left = (dinoRect.left - containerRect.left + 30) + 'px';
+                popup.style.top = '15px';
+                
+                gameContainer.appendChild(popup);
+                setTimeout(() => popup.remove(), 1000);
+            }
+            
             // Spawn obstacles
             function spawnObstacle() {
                 const obstacle = document.createElement('div');
@@ -894,18 +974,26 @@
                 
                 if (isPterodactyl) {
                     obstacle.classList.add('pterodactyl');
-                    // Dino ducks for pterodactyl
+                    // Dino ducks for pterodactyl - desktop ducks sooner, mobile timing stays
+                    const duckDelay = isMobile() ? 2650 : 2500;
                     setTimeout(() => {
                         dino.classList.add('duck');
-                        setTimeout(() => dino.classList.remove('duck'), 800);
-                    }, 2400);
+                        setTimeout(() => {
+                            dino.classList.remove('duck');
+                            showXP();
+                        }, 500);
+                    }, duckDelay);
                 } else {
                     obstacle.classList.add('cactus');
-                    // Dino jumps for cactus
+                    // Dino jumps for cactus - mobile jumps later
+                    const jumpDelay = isMobile() ? 3050 : 2900;
                     setTimeout(() => {
                         dino.classList.add('jump');
-                        setTimeout(() => dino.classList.remove('jump'), 850);
-                    }, 2900);
+                        setTimeout(() => {
+                            dino.classList.remove('jump');
+                            showXP();
+                        }, 550);
+                    }, jumpDelay);
                 }
                 
                 gameContainer.appendChild(obstacle);
@@ -1081,9 +1169,10 @@
         }
 
         // Video mute toggle
-        function toggleMute() {
-            const video = document.getElementById('reel-video');
-            const button = document.getElementById('mute-btn');
+        function toggleMute(version) {
+            const video = document.getElementById(`reel-${version}`);
+            const container = video.closest('.video-container');
+            const button = container.querySelector('.mute-btn');
             
             if (video.muted) {
                 video.muted = false;
@@ -1097,8 +1186,8 @@
         }
 
         // Video fullscreen toggle
-        function toggleFullscreen() {
-            const video = document.getElementById('reel-video');
+        function toggleFullscreen(version) {
+            const video = document.getElementById(`reel-${version}`);
             
             if (document.fullscreenElement || document.webkitFullscreenElement) {
                 // Exit fullscreen

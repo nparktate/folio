@@ -56,12 +56,13 @@ Install the "Live Server" extension in VS Code, then right-click `index.html` an
 └── server.py              # Local development server
 ```
 
-## Video Reel
+## Video Reels
 
-Add your video reel to:
-- `assets/videos/reel-21-9.mp4` (21:9 ultrawide aspect ratio)
+Add your video reels to:
+- `assets/videos/reel-16-9.mp4` (desktop, 16:9 aspect ratio)
+- `assets/videos/reel-1-1.mp4` (mobile/social, 1:1 square aspect ratio)
 
-The video displays at 21:9 on all devices. On mobile, users can tap the fullscreen button to watch in landscape mode.
+The site automatically switches between videos based on viewport. Fullscreen button available on both.
 
 ## Deployment to Cloudflare Pages
 
