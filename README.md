@@ -8,6 +8,7 @@ A minimal portfolio website for motion design, GFX, video, and photo work.
 python3 server.py
 ```
 Then open: http://localhost:8000
+or http://nicktp.com
 
 ---
 
