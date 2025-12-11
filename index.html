@@ -272,24 +272,12 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-        }
-
-        .video-container.mobile {
             aspect-ratio: 1 / 1;
-            display: block;
-        }
-
-        .video-container.desktop {
-            aspect-ratio: 16 / 9;
-            display: none;
         }
 
         @media (min-width: 640px) {
-            .video-container.mobile {
-                display: none;
-            }
-            .video-container.desktop {
-                display: block;
+            .video-container {
+                aspect-ratio: 16 / 9;
             }
         }
 
@@ -889,22 +877,13 @@
 
     <!-- Video Reel Section -->
     <section class="video-section">
-        <div class="video-container mobile">
-            <video id="reel-mobile" autoplay muted loop playsinline>
-                <source src="assets/videos/reel-1-1.mp4" type="video/mp4">
+        <div class="video-container" id="video-container">
+            <video id="reel-video" autoplay muted loop playsinline>
+                <!-- Source set dynamically by JS based on viewport -->
             </video>
             <div class="video-controls">
-                <button class="video-btn mute-btn muted" onclick="toggleMute('mobile')" aria-label="Toggle mute"></button>
-                <button class="video-btn fullscreen-btn" onclick="toggleFullscreen('mobile')" aria-label="Toggle fullscreen"></button>
-            </div>
-        </div>
-        <div class="video-container desktop">
-            <video id="reel-desktop" autoplay muted loop playsinline>
-                <source src="assets/videos/reel-16-9.mp4" type="video/mp4">
-            </video>
-            <div class="video-controls">
-                <button class="video-btn mute-btn muted" onclick="toggleMute('desktop')" aria-label="Toggle mute"></button>
-                <button class="video-btn fullscreen-btn" onclick="toggleFullscreen('desktop')" aria-label="Toggle fullscreen"></button>
+                <button class="video-btn mute-btn muted" onclick="toggleMute()" aria-label="Toggle mute"></button>
+                <button class="video-btn fullscreen-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen"></button>
             </div>
         </div>
     </section>
@@ -1168,11 +1147,42 @@
             populateFilters();
         }
 
+        // Video source loader - loads correct video based on viewport
+        (function() {
+            const video = document.getElementById('reel-video');
+            let currentSource = null;
+            
+            function getVideoSource() {
+                return window.innerWidth >= 640 
+                    ? 'assets/videos/reel-16-9.mp4' 
+                    : 'assets/videos/reel-1-1.mp4';
+            }
+            
+            function loadVideo() {
+                const newSource = getVideoSource();
+                if (newSource !== currentSource) {
+                    currentSource = newSource;
+                    video.src = newSource;
+                    video.load();
+                    video.play().catch(() => {}); // Ignore autoplay errors
+                }
+            }
+            
+            // Load initial video
+            loadVideo();
+            
+            // Reload on resize (debounced)
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(loadVideo, 250);
+            });
+        })();
+
         // Video mute toggle
-        function toggleMute(version) {
-            const video = document.getElementById(`reel-${version}`);
-            const container = video.closest('.video-container');
-            const button = container.querySelector('.mute-btn');
+        function toggleMute() {
+            const video = document.getElementById('reel-video');
+            const button = document.querySelector('.mute-btn');
             
             if (video.muted) {
                 video.muted = false;
@@ -1186,8 +1196,8 @@
         }
 
         // Video fullscreen toggle
-        function toggleFullscreen(version) {
-            const video = document.getElementById(`reel-${version}`);
+        function toggleFullscreen() {
+            const video = document.getElementById('reel-video');
             
             if (document.fullscreenElement || document.webkitFullscreenElement) {
                 // Exit fullscreen
